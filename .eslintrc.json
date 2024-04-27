@@ -32,7 +32,7 @@
     "key-spacing": ["error", { "beforeColon": false, "mode": "strict" }],
     "linebreak-style": ["error", "unix"],
     "max-len": [
-      "error",
+      "off",
       {
         "code": 120
       }
