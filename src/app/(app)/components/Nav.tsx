@@ -11,15 +11,16 @@ import {
 } from '@/components/ui/tooltip'
 import { buttonVariants } from '@/components/ui/button'
 
-
 interface NavProps {
-  isCollapsed: boolean
+  isCollapsed: boolean;
   links: {
-    title: string
-    label?: string
-    icon: LucideIcon
-    variant: 'default' | 'ghost'
-  }[]
+    title: string;
+    label?: string;
+    icon: LucideIcon;
+    isActive: boolean;
+    path: string;
+    // variant: 'default' | 'ghost'
+  }[];
 }
 
 export function Nav( { links, isCollapsed }: NavProps ) {
@@ -34,14 +35,14 @@ export function Nav( { links, isCollapsed }: NavProps ) {
             <Tooltip key={ index } delayDuration={ 0 }>
               <TooltipTrigger asChild>
                 <Link
-                  href='#'
+                  href={ link.path }
                   className={ cn(
                     buttonVariants( {
                       size: 'icon',
-                      variant: link.variant,
+                      variant: link.isActive ? 'default' : 'ghost',
                     } ),
                     'h-9 w-9',
-                    'default' === link.variant
+                    link.isActive
                       && 'dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white',
                   ) }
                 >
@@ -61,13 +62,13 @@ export function Nav( { links, isCollapsed }: NavProps ) {
           ) : (
             <Link
               key={ index }
-              href='#'
+              href={ link.path }
               className={ cn(
                 buttonVariants( {
                   size: 'sm',
-                  variant: link.variant,
+                  variant: link.isActive ? 'default' : 'ghost',
                 } ),
-                'default' === link.variant
+                link.isActive
                   && 'dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white',
                 'justify-start',
               ) }
@@ -78,8 +79,7 @@ export function Nav( { links, isCollapsed }: NavProps ) {
                 <span
                   className={ cn(
                     'ml-auto',
-                    'default' === link.variant
-                      && 'text-background dark:text-white',
+                    link.isActive && 'text-background dark:text-white',
                   ) }
                 >
                   {link.label}

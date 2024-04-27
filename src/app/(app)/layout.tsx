@@ -11,9 +11,13 @@ import React from 'react'
 import { Nav } from './components/Nav'
 import { TooltipProvider } from '@radix-ui/react-tooltip'
 import { Separator } from '@radix-ui/react-separator'
+import { usePathname } from 'next/navigation'
 
 export default function AppLayout( { children }: { children: React.ReactNode } ) {
   const [ isCollapsed, setIsCollapsed ] = React.useState( false )
+  const pathname = usePathname()
+
+  console.log( pathname )
 
   return (
     <main className='h-screen'>
@@ -41,21 +45,24 @@ export default function AppLayout( { children }: { children: React.ReactNode } )
               links={ [
                 {
                   icon: Inbox,
+                  isActive: pathname.startsWith( '/projects' ),
                   label: '128',
+                  path: '/projects',
                   title: 'Projects',
-                  variant: 'ghost',
                 },
                 {
                   icon: Inbox,
+                  isActive: pathname.startsWith( '/tasks' ),
                   label: '128',
+                  path: '/tasks',
                   title: 'Tasks',
-                  variant: 'default',
                 },
                 {
                   icon: File,
+                  isActive: pathname.startsWith( '/notifications' ),
                   label: '9',
+                  path: '/notifications',
                   title: 'Notifications',
-                  variant: 'ghost',
                 },
               ] }
             />
