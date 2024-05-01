@@ -17,8 +17,6 @@ export default function AppLayout( { children }: { children: React.ReactNode } )
   const [ isCollapsed, setIsCollapsed ] = React.useState( false )
   const pathname = usePathname()
 
-  console.log( pathname )
-
   return (
     <main className='h-screen'>
       <TooltipProvider delayDuration={ 0 }>

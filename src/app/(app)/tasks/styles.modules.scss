@@ -1,0 +1,54 @@
+$grey-3: #bcbcbc;
+$grey-1: #eeeeee;
+$transition-short: 0.2s;
+$grey-4: #9b9b9b;
+$spacing-2: 20px;
+$Blue: #198bc7;
+
+.tabs {
+    nav {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        border-bottom: 1px solid $grey-1;
+
+        .tab {
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 0.05em;
+            font-size: 16px;
+            color: $grey-3;
+            cursor: pointer;
+            transition: all $transition-short;
+            position: relative;
+            text-align: center;
+            width: 100%;
+            padding: $spacing-2 0;
+
+            &:not(.active):hover {
+                color: $grey-4;
+            }
+
+            &.active {
+                color: $Blue;
+
+                &::before {
+                    transform: scaleX(1);
+                }
+            }
+
+            &::before {
+                background-color: $Blue;
+                bottom: 0;
+                content: '';
+                display: block;
+                height: 2px;
+                left: 0;
+                position: absolute;
+                transform: scaleX(0);
+                width: 100%;
+                transition: ease-in-out $transition-short;
+            }
+        }
+    }
+}
