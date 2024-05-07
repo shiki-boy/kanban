@@ -1,0 +1,13 @@
+.pnpm-store
+
+Dockerfile*
+docker-compose*
+.git
+.gitignore
+README.md
+LICENSE
+Makefile
+.editorconfig
+.idea
+coverage*
+.env

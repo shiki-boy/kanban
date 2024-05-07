@@ -1,0 +1,43 @@
+version: '3.6'
+
+services:
+  backend:
+    build:
+      context: ./
+      target: development-build
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./:/usr/src/app:cached # when the host performs changes, the container is in read only mode.
+      - node_modules:/usr/src/app/node_modules:delegated # docker container performs changes, host is in read only mode.
+    restart: 'unless-stopped'
+    networks:
+      - kanban-be-express
+    links:
+      - postgres
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+
+  postgres:
+    image: 'postgres:14-alpine'
+    volumes:
+      - './volumes/postgres:/var/lib/postgresql/data'
+    env_file: .env
+    networks:
+      - kanban-be-express
+
+networks:
+  kanban-be-express:
+    driver: bridge
+
+volumes:
+  node_modules:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./node_modules
