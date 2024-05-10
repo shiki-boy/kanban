@@ -1,14 +1,15 @@
+import { drizzle } from "drizzle-orm/node-postgres";
 import { Client } from "pg";
+import * as schema from './schema'
 
 import {
   POSTGRES_DB,
   POSTGRES_HOST,
   POSTGRES_PASSWORD,
   POSTGRES_USER,
-
 } from "@config";
 
-const client = new Client({
+export const client = new Client({
   host: POSTGRES_HOST,
   port: 5432,
   user: POSTGRES_USER,
@@ -16,4 +17,6 @@ const client = new Client({
   database: POSTGRES_DB,
 });
 
-export default client
+export const db = drizzle(client, {
+  schema,
+});

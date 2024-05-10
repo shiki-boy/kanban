@@ -24,7 +24,7 @@
         "@/*": ["*"],
         "@config": ["config"],
         "@controllers/*": ["controllers/*"],
-        "@databases": ["databases"],
+        "@db/*": ["db/*"],
         "@dtos/*": ["dtos/*"],
         "@exceptions/*": ["exceptions/*"],
         "@interfaces/*": ["interfaces/*"],
