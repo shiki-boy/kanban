@@ -3,7 +3,6 @@ export const {
   NODE_ENV,
   PORT,
   SECRET_KEY,
-  LOG_FORMAT,
   LOG_DIR,
   ORIGIN,
   POSTGRES_DB,

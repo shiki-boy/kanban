@@ -5,11 +5,12 @@ import hpp from "hpp";
 import morgan from "morgan";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
-import { NODE_ENV, PORT, LOG_FORMAT, ORIGIN, CREDENTIALS } from "@config";
+import { NODE_ENV, PORT, ORIGIN, CREDENTIALS } from "@config";
 import { client as dbClient } from "@/db";
 import { Routes } from "@interfaces/routes.interface";
 import errorMiddleware from "@middlewares/error.middleware";
 import { logger, stream } from "@utils/logger";
+import responseIdMiddleware from "@middlewares/responseId.middleware";
 
 class App {
   public app: express.Application;
@@ -42,16 +43,26 @@ class App {
   }
 
   private connectToDatabase() {
-    dbClient.connect().then( () => logger.info("DB connected successfully") ).catch( e => {
-      logger.error('DB connecttion failed!!!')
-      logger.error(e)
-      process.exit(1)
-    });
+    dbClient
+      .connect()
+      .then(() => logger.info("DB connected successfully"))
+      .catch((e) => {
+        logger.error("DB connecttion failed!!!");
+        logger.error(e);
+        process.exit(1);
+      });
   }
 
   private initializeMiddlewares() {
-    // * morgan dev -> :method :url :status :response-time ms - :res[content-length]
+    this.app.use(responseIdMiddleware);
+
+    morgan.token("resId", function (req, res) {
+      return `${res.getHeader("Response-Id")}`;
+    });
+    const LOG_FORMAT =
+      ":method :url :status :response-time ms - :resId";
     this.app.use(morgan(LOG_FORMAT, { stream }));
+
     this.app.use(cors({ origin: ORIGIN, credentials: CREDENTIALS }));
     this.app.use(hpp());
     this.app.use(helmet());
