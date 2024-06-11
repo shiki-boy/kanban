@@ -82,7 +82,7 @@ class App {
         info: {
           title: "REST API",
           version: "1.0.0",
-          description: "Habit ping docs",
+          description: "API docs",
         },
       },
       apis: ["swagger.yml"],

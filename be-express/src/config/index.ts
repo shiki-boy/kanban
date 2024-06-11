@@ -9,4 +9,6 @@ export const {
   POSTGRES_PASSWORD,
   POSTGRES_USER,
   POSTGRES_HOST,
+  SMTP_PORT,
+  MAIL_HOST,
 } = process.env;

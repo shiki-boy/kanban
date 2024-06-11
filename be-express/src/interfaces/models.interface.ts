@@ -1,17 +1,16 @@
 import { JwtPayload } from "jsonwebtoken";
 
 interface BaseFields {
-  _id: string;
-  createdAt: Date;
-  updatedAt: Date;
+  id: number;
+  createdAt: Date | string;
+  updatedAt: Date | string;
 }
 
 export interface IUser extends BaseFields {
-  firstName: string;
-  lastName: string;
   email: string;
-  password: string;
-  isActive: boolean;
+  name: string
+  otp: string 
+  // isActive: boolean;
 }
 
 interface IUserMethods {

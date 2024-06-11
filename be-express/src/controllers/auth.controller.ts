@@ -4,6 +4,8 @@ import { RequestWithUser } from "@/interfaces/utils.interface";
 import { SignupFormDto } from "@/dtos/auth/register.dto";
 import { LoginFormDto } from "@/dtos/auth/login.dto";
 import AuthService from "@/services/auth.service";
+import transporter from "@/email";
+import { logger } from "@/utils/logger";
 
 class AuthController {
   public authService = new AuthService();
@@ -23,7 +25,18 @@ class AuthController {
   public register = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const data: SignupFormDto = req.body;
+      
       const responseData = await this.authService.createUser(data);
+
+      // send otp in email, no passwords in this app
+      await transporter.sendMail({
+        from: "no-reply@example.com",
+        to: data.email,
+        subject: "OTP",
+        text: `Here is the OTP: ${responseData.otp}. It is valid for only 1 hour.`,
+      });
+      
+      logger.info("📨 OTP email sent successfully");
 
       res.json(responseData);
     } catch (error) {
