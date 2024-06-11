@@ -15,6 +15,12 @@ class AuthController {
       // check username, password
       const data: LoginFormDto = req.body;
       const responseData = await this.authService.findUser(data);
+
+      if (!responseData.token) {
+        res.json({ message: "OTP has been sent to your email" });
+        return;
+      }
+
       res.json(responseData);
     } catch (error) {
       console.log(error);
@@ -25,7 +31,7 @@ class AuthController {
   public register = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const data: SignupFormDto = req.body;
-      
+
       const responseData = await this.authService.createUser(data);
 
       // send otp in email, no passwords in this app
@@ -35,7 +41,7 @@ class AuthController {
         subject: "OTP",
         text: `Here is the OTP: ${responseData.otp}. It is valid for only 1 hour.`,
       });
-      
+
       logger.info("📨 OTP email sent successfully");
 
       res.json(responseData);

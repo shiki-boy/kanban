@@ -11,4 +11,5 @@ export const {
   POSTGRES_HOST,
   SMTP_PORT,
   MAIL_HOST,
+  FROM_EMAIL = 'no-reply@example.com'
 } = process.env;
