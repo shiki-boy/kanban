@@ -4,7 +4,7 @@ import { eq } from "drizzle-orm";
 import jwt from "jsonwebtoken";
 
 import { SignupFormDto } from "@dtos/auth/register.dto";
-import { IUser } from "@interfaces/models.interface";
+import { CustomTokenPayload, IUser } from "@interfaces/models.interface";
 import { HttpException } from "@exceptions/HttpException";
 import { LoginFormDto } from "@dtos/auth/login.dto";
 import { db } from "@/db";
@@ -92,7 +92,7 @@ class AuthService {
   }
 
   private async createToken(userId: number) {
-    const jwtPayload = {
+    const jwtPayload: CustomTokenPayload = {
       userId,
     };
 

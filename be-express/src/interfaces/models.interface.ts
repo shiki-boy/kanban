@@ -13,7 +13,6 @@ export interface IUser extends BaseFields {
   // isActive: boolean;
 }
 
-interface IUserMethods {
-  generateAuthToken: () => string;
+export interface CustomTokenPayload extends JwtPayload {
+  userId: number;
 }
-

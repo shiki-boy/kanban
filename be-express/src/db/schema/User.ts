@@ -11,3 +11,11 @@ const User = pgTable("users", {
 });
 
 export default User;
+
+export const getUserInfo = ({
+  otp,
+  otpExpiry,
+  updatedAt,
+  createdAt,
+  ...rest
+}: typeof User.$inferSelect) => rest;
